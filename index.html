@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#9d1d20"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>Brigada de Incêndio — Vistoria Técnica V2</title>
+
+<style>
+
+:root{--bg:#f4f6f8;--card:#fff;--text:#17202a;--muted:#65717e;--line:#dfe4e8;--primary:#9d1d20;--primary2:#741417;--ok:#18794e;--warn:#a15c00;--bad:#b42318;--info:#2457a7;--shadow:0 5px 20px rgba(20,30,40,.08)}*{box-sizing:border-box}body{margin:0;font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}.top{position:sticky;top:0;z-index:10;background:linear-gradient(135deg,var(--primary2),var(--primary));color:#fff;padding:12px 16px;box-shadow:0 2px 12px #0002}.topin{max-width:1100px;margin:auto;display:flex;gap:12px;align-items:center}.mark{width:42px;height:42px;border:2px solid #fff8;border-radius:50%;display:grid;place-items:center;font-weight:800}.top h1{font-size:17px;margin:0}.top small{opacity:.85}.progress{height:5px;background:#ffffff30;margin-top:10px;border-radius:5px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#fff;transition:.25s}.wrap{max-width:1100px;margin:auto;padding:16px 16px 90px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;box-shadow:var(--shadow)}h2{font-size:20px;margin:0 0 4px}h3{font-size:16px;margin:0}.sub{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}label.field{display:block;color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}.field input,.field select,.field textarea{display:block;width:100%;margin-top:5px;border:1px solid #cfd6dc;border-radius:10px;padding:11px;background:#fff;color:var(--text)}textarea{min-height:80px;resize:vertical}.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:700;cursor:pointer}.btn.primary{background:var(--primary);color:white}.btn.ghost{background:#eef1f4;color:#26313a}.btn.danger{background:#fee4e2;color:var(--bad)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.toggle{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff;display:flex;align-items:center;gap:9px;cursor:pointer}.toggle input{width:19px;height:19px;accent-color:var(--primary)}.section{margin-top:18px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.badge{font-size:11px;border-radius:999px;padding:4px 8px;background:#edf0f2;color:#58636d}.item{border:1px solid var(--line);border-radius:12px;background:#fff;margin:9px 0;overflow:hidden}.itemmain{padding:13px}.q{font-weight:650;margin-bottom:10px}.choices{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.choice{border:1px solid #ccd3d8;background:#f8f9fa;border-radius:9px;padding:9px 4px;font-weight:800;cursor:pointer}.choice.sel[data-v="C"]{background:#dff4e9;border-color:#75b895;color:#11623e}.choice.sel[data-v="NC"]{background:#fee4e2;border-color:#e69a93;color:#9b1c13}.choice.sel[data-v="NA"]{background:#edf0f2;border-color:#aeb7bf}.choice.sel[data-v="NV"]{background:#e6effd;border-color:#91afe0;color:#244f91}.detail{display:none;border-top:1px dashed var(--line);padding:12px;background:#fafbfc}.detail.show{display:block}.crit{display:flex;gap:6px;flex-wrap:wrap}.crit button{border:1px solid #ccd3d8;background:#fff;border-radius:999px;padding:7px 10px;cursor:pointer}.crit button.sel{background:#fff0d6;border-color:#d49a38;color:#7a4800}.photoPreview{display:flex;gap:8px;overflow:auto;margin-top:8px}.photoPreview img{height:70px;width:90px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.stat b{font-size:22px;display:block}.stat small{color:var(--muted)}.pending{border-left:4px solid var(--bad)}.footer{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:9px 14px;z-index:9}.footerin{max-width:1100px;margin:auto;display:flex;gap:8px;justify-content:space-between}.hidden{display:none!important}.toast{position:fixed;right:16px;bottom:75px;background:#20262c;color:#fff;padding:10px 14px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;z-index:30}.toast.show{opacity:1;transform:none}.signature{border:1px dashed #aab4bc;border-radius:10px;width:100%;height:160px;touch-action:none;background:#fff}.notice{background:#fff7e6;border:1px solid #f1ce88;border-radius:10px;padding:10px;color:#744b00;font-size:13px}.pill{display:inline-block;font-size:11px;padding:3px 7px;border-radius:999px;background:#f1f3f5;color:#55616b;margin-left:6px}
+
+#printReport{display:none}
+
+.cbadge{display:inline-block;font-weight:700;font-size:11px;border-radius:999px;padding:2px 9px;vertical-align:middle;line-height:1.35}
+
+.crit button.sel[data-crit="Moderada"]{background:#f2b705;border-color:#c99700;color:#3d2e00}
+
+.crit button.sel[data-crit="Alta"]{background:#e8590c;border-color:#b94508;color:#fff}
+
+.crit button.sel[data-crit="Crítica"]{background:#b42318;border-color:#7a1810;color:#fff}
+
+.chartBox svg{display:block;width:100%;max-width:640px;height:auto;margin:0 auto}
+
+.chartNote{font-size:12px;color:var(--muted);text-align:center;margin-top:4px}
+
+.instLogoPreview{display:flex;align-items:center;gap:12px;margin-top:8px}.instLogoPreview img{width:72px;height:72px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:#fff}.instLogoPreview .emptyLogo{width:72px;height:72px;border:1px dashed #aab4bc;border-radius:8px;display:grid;place-items:center;text-align:center;font-size:10px;color:var(--muted)}
+
+@media print{
+
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+ body{background:#fff;font-size:9pt;line-height:1.3;color:#111}
+
+ .top,.footer,#screenForm,#screenReview,.toast{display:none!important}
+
+ #printReport{display:block!important;padding:0;margin:0}
+
+ .printHead{display:grid;grid-template-columns:56px 1fr 125px;align-items:center;gap:10px;border-bottom:2px solid #741417;padding-bottom:6px;margin-bottom:8px}
+
+ .printCrest{width:48px;height:56px;object-fit:contain}
+
+ .printHead h1{font-size:12.5pt;margin:0 0 2px}.printHead p{margin:1px 0;color:#444;font-size:8.5pt}
+
+ .printDocId{text-align:right;font-size:7.5pt;line-height:1.35}.printDocId strong{font-size:8.5pt}
+
+ .printGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 6px;margin:0 0 6px}
+
+ .printBox{border:1px solid #c4c9ce;border-radius:4px;padding:3px 5px;break-inside:avoid;font-size:8.5pt}
+
+ .printBox b{display:block;font-size:6.5pt;text-transform:uppercase;color:#555;margin-bottom:1px;letter-spacing:.03em}
+
+ .printBox.wide{grid-column:1/-1}
+
+ h2.printTitle{font-size:10.5pt;border-bottom:1px solid #999;padding-bottom:2px;margin:10px 0 5px;break-after:avoid}
+
+ .chartWrap{border:1px solid #c4c9ce;border-radius:4px;padding:4px 8px;break-inside:avoid}
+
+ .chartWrap svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+
+ .chartNote{font-size:7.5pt;color:#555;text-align:center}
+
+ .printNC{border:1px solid #c4c9ce;border-left:5px solid #6b7785;border-radius:3px;padding:4px 6px;margin:4px 0;break-inside:avoid}
+
+ .printNC h3{font-size:9pt;margin:0 0 3px}.printNC p{margin:1px 0}
+
+ .ncGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.ncMeta{font-size:8pt;color:#333}
+
+ .cbadge{font-size:7.5pt;padding:0 6px;margin:0 3px}
+
+ h3.secTitle{font-size:9pt;margin:7px 0 2px;color:#741417;break-after:avoid}
+
+ table.chk{width:100%;border-collapse:collapse;font-size:8pt}
+
+ table.chk th{background:#eef1f4;text-align:left;font-size:7pt;text-transform:uppercase;padding:2px 4px;border:1px solid #c4c9ce}
+
+ table.chk td{padding:2px 4px;border:1px solid #d6dade;vertical-align:top}
+
+ table.chk tr{break-inside:avoid}
+
+ table.chk .n{width:24px;text-align:center;color:#555}table.chk .s{width:78px}table.chk .r{width:118px}
+
+ table.chk tr.nc td{background:#fdecea}table.chk tr.pend td{background:#fff6e0}
+
+ .sbadge{display:inline-block;color:#fff;font-weight:700;font-size:7pt;border-radius:3px;padding:1px 5px;white-space:nowrap}
+
+ .photoRef{font-weight:800;color:#741417}
+
+ .photoCard{border:1px solid #c4c9ce;border-left:4px solid #6b7785;border-radius:4px;padding:4px 6px;margin:0 0 6px;break-inside:avoid}
+
+ .photoCard h3{font-size:8.5pt;margin:0 0 3px}
+
+ .photoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+
+ .photoGrid figure{margin:0;break-inside:avoid}
+
+ .photoGrid img{width:100%;max-height:150px;object-fit:contain;border:1px solid #ccc}
+
+ .photoGrid figcaption{font-size:7pt;color:#555;margin-top:1px}
+
+ .printSignature{margin-top:12px;break-inside:avoid}
+
+ .printSignature img{max-width:220px;max-height:70px;display:block;margin:4px 0;border-bottom:1px solid #555}
+
+ .printObs{white-space:pre-wrap}
+
+ .printFooter{margin-top:10px;border-top:1px solid #aaa;padding-top:3px;font-size:7pt;color:#666;display:flex;justify-content:space-between;gap:10px}
+
+ @page{size:A4;margin:10mm}
+
+}
+
+@media(max-width:720px){.grid,.grid3,.modules{grid-template-columns:1fr}.choices{grid-template-columns:repeat(4,1fr)}.stats{grid-template-columns:repeat(3,1fr)}.wrap{padding:12px 10px 90px}.card{padding:13px}.topin{align-items:flex-start}.mark{width:36px;height:36px}.choice{font-size:13px}.footerin .btn{flex:1;padding:11px 6px}}
+
+</style></head>
+
+<body>
+
+<header class="top"><div class="topin"><img src="https://www.itatiba.sp.gov.br/Arquitetura/Imagens/brasao_itatiba.png" alt="Brasão de Itatiba" style="width:54px;height:60px;object-fit:contain;background:white;border-radius:5px;padding:3px"><div style="flex:1"><h1>Brigada de Incêndio — Vistoria Técnica</h1><small>SESMT • Checklist de inspeção preventiva • V3.0 • Offline</small><div class="progress"><i id="bar"></i></div></div></div></header>
+
+<main class="wrap">
+
+<div class="notice hidden" id="storageNotice" style="margin-bottom:10px"></div>
+
+<section id="screenForm">
+
+<div class="card"><h2>Identificação da vistoria</h2><p class="sub">Rascunho salvo neste aparelho. As vistorias podem ser arquivadas e consultadas offline.</p><div class="grid">
+
+<label class="field">Lotação / Unidade<input id="lotacao" placeholder="Ex.: ACE — Ambulatório Central"></label>
+
+<label class="field">Secretaria / Órgão<input id="secretaria" placeholder="Ex.: Secretaria Municipal de Saúde"></label>
+
+<label class="field">Endereço<input id="endereco" placeholder="Rua, nº, bairro"></label>
+
+<label class="field">Responsável pelo local<input id="responsavel"></label>
+
+<label class="field">Brigadista responsável<input id="brigadista"></label>
+
+<label class="field">Data da vistoria<input id="data" type="date"></label>
+
+<label class="field">Setor / Pavimento<input id="setor" placeholder="Toda a unidade ou setor específico"></label>
+
+<label class="field">População aproximada<input id="populacao" type="number" min="0"></label>
+
+</div></div>
+
+<div class="card"><h2>Caracterização da unidade</h2><p class="sub">Marque os recursos/atividades existentes. Os blocos específicos serão incluídos automaticamente.</p><div class="modules" id="modules"></div></div>
+
+<div class="card"><div class="sectionhead"><div><h2>Checklist técnico</h2><div class="sub">C = Conforme • NC = Não Conforme • NA = Não Aplicável • NV = Não Verificado</div></div><span class="badge" id="answeredBadge">0/0</span></div><div id="checklist"></div></div>
+
+<div class="card"><h2>Observações gerais</h2><label class="field">Informações complementares<textarea id="obsGeral" placeholder="Registre condições relevantes não contempladas nos quesitos..."></textarea></label></div>
+
+<div class="card"><h2>Fechamento e assinatura</h2><p class="sub">A assinatura será preservada localmente junto com a vistoria.</p><canvas id="sig" class="signature"></canvas><div class="toolbar"><button class="btn ghost" id="clearSig">Limpar assinatura</button></div><div class="notice" style="margin-top:12px">Esta ferramenta é uma de inspeção visual da Brigada. Ensaios, manutenção, abertura de painéis, testes pressurizados e intervenções técnicas devem ser realizados apenas por pessoal autorizado/qualificado conforme o sistema envolvido.</div></div>
+
+</section>
+
+<section id="screenHistory" class="hidden"><div class="card"><div class="sectionhead"><div><h2>Histórico de vistorias</h2><p class="sub">Registros armazenados neste dispositivo</p></div><button class="btn ghost" id="historyBack">Voltar</button></div><div class="toolbar"><button class="btn ghost" id="backupAll">Backup completo JSON</button><label class="btn ghost">Restaurar backup<input id="restoreAll" type="file" accept="application/json,.json" hidden></label></div><div id="historyList"></div><p class="notice">Os registros não são sincronizados entre aparelhos. Faça backups periódicos: limpar os dados do navegador pode excluir as vistorias.</p></div></section><section id="screenReview" class="hidden"><div class="card"><h2>Resumo da vistoria</h2><p class="sub" id="reviewTitle"></p><div class="stats" id="stats"></div><div class="chartBox" id="chartBox" style="margin-top:14px"></div></div><div class="card"><div class="sectionhead"><div><h2>Não conformidades</h2><div class="sub">Pendências registradas durante a inspeção.</div></div></div><div id="pendings"></div></div><div class="card"><h2>Envio e exportação</h2><p class="sub">Salve no histórico local e exporte backups regularmente.</p><div class="toolbar"><button class="btn primary" id="sendBtn">Salvar no histórico</button><button class="btn ghost" id="exportBtn">Backup JSON</button><button class="btn ghost" id="printBtn">Imprimir / PDF</button><button class="btn ghost" id="htmlBtn">Baixar relatório</button></div><p class="sub" style="margin-top:8px">PDF: utilize a opção “Salvar como PDF” na impressão do navegador. O relatório HTML também pode ser baixado.</p></div></section>
+
+</main>
+
+<section id="printReport"></section>
+
+<div class="footer"><div class="footerin"><button class="btn ghost" id="newBtn">Nova</button><button class="btn ghost" id="historyBtn">Histórico</button><button class="btn ghost hidden" id="backBtn">Voltar</button><button class="btn primary" id="reviewBtn">Revisar vistoria</button></div></div><div class="toast" id="toast">Salvo</div>
+
+<script>
+
+const MODULES=[['hidrante','Hidrantes / mangotinhos'],['alarme','Alarme / detecção'],['glp','GLP / gases combustíveis'],['cozinha','Cozinha / copa'],['quimicos','Inflamáveis / químicos'],['oficina','Oficina / manutenção / garagem'],['saude','Serviço de saúde'],['escola','Escola / creche'],['publico','Atendimento ao público']];
+
+const Q={
+
+'1. Rotas de fuga e saídas':['Corredores, passagens, escadas e rampas destinados ao abandono estão desobstruídos?','As portas utilizadas nas rotas de saída apresentam condições aparentes de abertura e não estão bloqueadas?','As saídas de emergência estão claramente identificadas e visíveis?','Não há armazenamento de materiais, mobiliários ou equipamentos reduzindo a circulação das rotas de fuga?','Mudanças de direção e acessos às saídas podem ser identificados sem dificuldade?','O acesso externo permite o afastamento seguro dos ocupantes da edificação?','Existe ponto de encontro definido ou área externa segura para reunião após o abandono?','Não foram identificadas alterações de layout que comprometam a rota de abandono?'],
+
+'2. Sinalização de emergência':['A sinalização de saída e rota de fuga está presente nos pontos necessários?','As placas de emergência encontram-se visíveis, conservadas e sem obstruções?','Extintores e demais equipamentos de combate estão devidamente sinalizados?','Mudanças de direção e acessos de emergência possuem indicação adequada?','As sinalizações existentes não apresentam informações conflitantes, improvisadas ou ilegíveis?','Riscos específicos e proibições relevantes estão sinalizados quando aplicável?'],
+
+'3. Iluminação de emergência':['Existem luminárias de emergência nas rotas, escadas e saídas onde necessárias?','As luminárias estão íntegras, visíveis e sem obstrução?','Não foram observadas luminárias de emergência desligadas, danificadas ou removidas?','A distribuição aparente da iluminação permite orientar o abandono em caso de falta de energia?'],
+
+'4. Extintores de incêndio':['Os extintores previstos para a área estão presentes em seus locais?','O acesso aos extintores encontra-se livre e imediato?','Os extintores apresentam sinalização e posicionamento visíveis?','Lacre, pino, mangueira, bico e demais componentes aparentam estar íntegros?','O cilindro não apresenta corrosão severa, amassamentos ou danos aparentes?','Quando existente, o indicador de pressão não apresenta condição visual anormal?','Etiquetas, selos e registros de manutenção estão presentes e legíveis?','O agente extintor disponível aparenta ser compatível com os riscos predominantes do local?'],
+
+'5. Instalações elétricas — inspeção visual':['Não há condutores elétricos expostos ou emendas improvisadas acessíveis?','Tomadas, plugues e interruptores aparentam estar íntegros e sem sinais de aquecimento/carbonização?','Não há uso excessivo de adaptadores, benjamins ou extensões como instalação permanente?','Quadros elétricos permanecem fechados, acessíveis e sem armazenamento à sua frente?','Não há materiais combustíveis, líquidos ou objetos armazenados dentro ou imediatamente junto aos quadros elétricos?','Equipamentos elétricos não apresentam cabos danificados ou ligações visivelmente improvisadas?','Não foram percebidos odor de queimado, aquecimento anormal, faíscas ou marcas de carbonização?'],
+
+'6. Materiais combustíveis e organização':['Não existe acúmulo excessivo de papel, papelão, madeira, tecidos ou resíduos combustíveis?','Materiais combustíveis estão afastados de fontes de calor e equipamentos que possam gerar ignição?','Depósitos e áreas de armazenamento apresentam organização que permita circulação e inspeção?','Não há materiais armazenados em escadas, corredores ou junto a equipamentos de emergência?','A limpeza e a retirada de resíduos combustíveis são realizadas de forma adequada?'],
+
+'7. Organização da Brigada e emergência':['A unidade possui informação acessível sobre os brigadistas e/ou responsáveis por emergência?','Os ocupantes-chave sabem como comunicar um princípio de incêndio ou emergência?','Os brigadistas conhecem o ponto de encontro ou local seguro definido para abandono?','Há meios disponíveis para acionamento dos serviços públicos de emergência?','A distribuição dos brigadistas aparenta considerar os setores/turnos existentes?','Pessoas que possam necessitar de auxílio no abandono foram consideradas no planejamento local?'],
+
+'8. Áreas externas e acesso de emergência':['Portões e acessos externos relevantes estão livres de bloqueios que possam prejudicar atendimento de emergência?','Não há estacionamento ou materiais impedindo acesso a equipamentos de segurança?','Não há acúmulo significativo de vegetação seca, resíduos ou combustíveis junto à edificação?','O ponto de encontro, quando existente, está em local que não prejudica o acesso das equipes de emergência?'],
+
+'Hidrantes / mangotinhos':['Os abrigos de hidrantes/mangotinhos estão identificados, acessíveis e desobstruídos?','Portas e abrigos apresentam integridade aparente e podem ser acessados?','Mangueiras, esguichos, adaptadores e acessórios aparentam estar presentes e conservados?','Não há materiais estranhos armazenados dentro dos abrigos?','Registros e conexões não apresentam vazamentos ou danos visíveis?'],
+
+'Alarme e detecção':['Botoeiras, sirenes, detectores e demais dispositivos visíveis aparentam estar íntegros e desobstruídos?','A central, quando acessível à inspeção visual, não indica falha evidente?','Os dispositivos de acionamento estão identificados e acessíveis?','Os ocupantes sabem reconhecer o sinal de alarme e a conduta de abandono?'],
+
+'GLP / gases combustíveis':['Recipientes de GLP/gases estão instalados ou armazenados em local aparentemente ventilado e apropriado?','Não há sinais perceptíveis de vazamento, odor anormal ou danos nos recipientes/conexões?','Não há materiais combustíveis ou fontes de ignição indevidamente próximos aos recipientes?','Cilindros estão protegidos contra quedas, impactos ou movimentação indevida?','O acesso aos recipientes e dispositivos de bloqueio encontra-se livre?'],
+
+'Cozinha / copa':['Fogões, fornos e equipamentos de aquecimento aparentam estar em condições seguras de uso?','Materiais combustíveis não estão indevidamente próximos a chamas ou superfícies aquecidas?','Coifas, filtros e áreas sujeitas a gordura apresentam condição adequada de limpeza, quando existentes?','Não há cabos, tomadas ou equipamentos elétricos danificados na área?','Os meios de combate disponíveis são compatíveis, em inspeção preliminar, com os riscos da cozinha?'],
+
+'Inflamáveis e produtos químicos':['Recipientes de produtos inflamáveis/químicos estão identificados e fechados quando não utilizados?','Não foram observados vazamentos, recipientes danificados ou armazenamento improvisado?','Produtos inflamáveis estão afastados de fontes de calor, faíscas e ignição?','A quantidade mantida na área operacional não aparenta ser desnecessariamente excessiva?','Há ventilação e organização adequadas para o armazenamento observado?'],
+
+'Oficina / manutenção / garagem':['Atividades com solda, corte ou geração de faíscas estão segregadas de materiais combustíveis?','Óleos, combustíveis, solventes e estopas contaminadas possuem armazenamento/descarte adequado?','Cilindros e recipientes pressurizados visíveis encontram-se protegidos contra queda e impacto?','Áreas de carregamento de baterias e equipamentos elétricos não apresentam improvisações aparentes?','Não há combustíveis armazenados em recipientes inadequados ou sem identificação?'],
+
+'Serviço de saúde':['Rotas de abandono permanecem adequadas à circulação de pacientes, macas e cadeiras de rodas?','Existe previsão de auxílio para pacientes ou usuários com mobilidade reduzida em emergência?','Gases medicinais, quando existentes, estão organizados, identificados e protegidos contra queda/impacto?','Corredores e acessos não estão obstruídos por macas, cadeiras, equipamentos ou materiais?'],
+
+'Escola / creche':['Há procedimento ou organização aparente para abandono de crianças e alunos?','Portões e acessos necessários ao abandono podem ser utilizados sem bloqueios indevidos?','Mobiliários, brinquedos e materiais não comprometem corredores e rotas de fuga?','Há previsão de assistência a crianças pequenas ou pessoas com mobilidade reduzida?'],
+
+'Atendimento ao público':['Áreas de espera e atendimento mantêm rotas de circulação e saída desobstruídas?','A disposição de cadeiras, filas ou mobiliários não cria bloqueios relevantes às saídas?','Há condição para orientar visitantes e usuários durante uma situação de abandono?']};
+
+const KEY='brigadaV1'; let crestData='';
+
+const store=(()=>{let be=null,name='none';
+
+ for(const n of ['localStorage','sessionStorage']){try{const b=window[n];b.setItem('__p','1');b.removeItem('__p');be=b;name=n;break}catch(e){}}
+
+ return {name,get(k){try{return be?be.getItem(k):null}catch(e){return null}},set(k,v){try{if(!be)return false;be.setItem(k,v);return true}catch(e){return false}},del(k){try{if(be)be.removeItem(k)}catch(e){}}};
+
+})();
+
+let state={};try{state=JSON.parse(store.get('brigadaV1')||'{}')||{}}catch(e){state={}}
+
+state.meta=state.meta||{};state.modules=state.modules||{};state.answers=state.answers||{};
+
+const ST={C:['Conforme','#18794e'],NC:['Não conforme','#b42318'],NA:['Não aplicável','#6b7785'],NV:['Não verificado','#2457a7'],Pendente:['Sem resposta','#a15c00']};
+
+function critMeta(c){return {'Crítica':{bg:'#b42318',fg:'#fff'},'Alta':{bg:'#e8590c',fg:'#fff'},'Moderada':{bg:'#f2b705',fg:'#3d2e00'}}[c]||{bg:'#6b7785',fg:'#fff'}}
+
+function badge(t,m){return `<span class="cbadge" style="background:${m.bg};color:${m.fg}">${esc(t)}</span>`}
+
+function fmtDate(d){return /^\d{4}-\d{2}-\d{2}$/.test(d||'')?d.split('-').reverse().join('/'):(d||'')}
+
+function countsOf(qs){let c={C:0,NC:0,NA:0,NV:0,Pendente:0};qs.forEach(q=>{let s=state.answers[q]?.status;s?c[s]++:c.Pendente++});return c}
+
+function chartSVG(c){
+
+ const keys=['C','NC','NA','NV'],tot=keys.reduce((a,k)=>a+c[k],0)+(c.Pendente||0),W=560,L=122,BW=330,RH=28,H=keys.length*RH+8;
+
+ const rows=keys.map((k,i)=>{const v=c[k],w=tot?Math.round(v/tot*BW):0,pct=tot?Math.round(v/tot*100):0,y=4+i*RH;
+
+  return `<text x="${L-8}" y="${y+16}" text-anchor="end" font-size="12" fill="#17202a">${ST[k][0]}</text><rect x="${L}" y="${y+2}" width="${BW}" height="18" rx="3" fill="#e9edf0"/><rect x="${L}" y="${y+2}" width="${v?Math.max(w,3):0}" height="18" rx="3" fill="${ST[k][1]}"/><text x="${L+BW+8}" y="${y+16}" font-size="12" font-weight="700" fill="#17202a">${v} (${pct}%)</text>`}).join('');
+
+ const note=`Total de quesitos: ${tot}`+(c.Pendente?` • sem resposta: ${c.Pendente}`:'');
+
+ return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de barras da situação dos quesitos">${rows}</svg><div class="chartNote">${note}</div>`;
+
+}
+
+const $=s=>document.querySelector(s);const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+
+let toastT,storageMode=store.name==='none'?'blocked':'ok';
+
+const STORAGE_MSG={
+
+ blocked:'⚠ O navegador não permite salvar o rascunho automaticamente aqui. Os dados ficam só na memória: não feche nem atualize a página e envie ao Sheets/Drive ao terminar.',
+
+ full:'⚠ Armazenamento do navegador cheio. Textos continuam salvos, mas fotos e assinatura ficam só na memória: envie ao Sheets/Drive logo e não feche a página.',
+
+ session:'ℹ Salvamento temporário: o rascunho some se você fechar a aba. Envie ao Sheets/Drive ao terminar.'};
+
+function showStorage(){const e=$('#storageNotice');if(!e)return;const m=STORAGE_MSG[storageMode]||'';e.textContent=m;e.classList.toggle('hidden',!m)}
+
+function lightState(){return JSON.parse(JSON.stringify(state,(k,v)=>(k==='photos'||k==='signature')?undefined:v))}
+
+function toast(t='Salvo automaticamente',ms=1200){let e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),ms)}
+
+function save(show=false){['lotacao','secretaria','endereco','responsavel','brigadista','data','setor','populacao','obsGeral'].forEach(id=>state.meta[id]=$('#'+id)?.value||'');
+
+ let ok=store.set(KEY,JSON.stringify(lightState())); scheduleDraft();
+
+ if(ok)storageMode=store.name==='sessionStorage'?'session':'ok';
+
+ else if(store.name==='none')storageMode='blocked';
+
+ else{ok=store.set(KEY,JSON.stringify(lightState()));storageMode=ok?'full':'blocked'}
+
+ showStorage();updateProgress();if(show&&storageMode==='ok')toast();return ok}
+
+function buildModules(){let c=$('#modules');c.innerHTML='';MODULES.forEach(([k,n])=>{let l=document.createElement('label');l.className='toggle';l.innerHTML=`<input type="checkbox" data-m="${k}" ${state.modules[k]?'checked':''}><span>${n}</span>`;c.appendChild(l)});c.querySelectorAll('input').forEach(x=>x.onchange=()=>{state.modules[x.dataset.m]=x.checked;save();buildChecklist()})}
+
+const MODULE_QUESTION_KEYS={
+  hidrante:'Hidrantes / mangotinhos',
+  alarme:'Alarme e detecção',
+  glp:'GLP / gases combustíveis',
+  cozinha:'Cozinha / copa',
+  quimicos:'Inflamáveis e produtos químicos',
+  oficina:'Oficina / manutenção / garagem',
+  saude:'Serviço de saúde',
+  escola:'Escola / creche',
+  publico:'Atendimento ao público'
+};
+function sections(){
+  const s=Object.entries(Q).slice(0,8);
+  MODULES.forEach(([key,label])=>{
+    if(!state.modules[key])return;
+    const questions=Q[MODULE_QUESTION_KEYS[key]];
+    if(Array.isArray(questions))s.push([label,questions]);
+    else console.error('Módulo sem quesitos:',key,label);
+  });
+  return s;
+}
+
+const PHOTO_LONG=854,PHOTO_SHORT=480,PHOTO_TARGET_KB=110,PHOTO_MAX=8;
+
+function loadImage(file){return new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),im=new Image();im.onload=()=>{URL.revokeObjectURL(url);resolve(im)};im.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('formato de imagem não suportado'))};im.src=url})}
+
+async function decodeImage(file){
+
+ if(window.createImageBitmap){
+
+  try{return await createImageBitmap(file,{imageOrientation:'from-image'})}catch(e){}
+
+  try{return await createImageBitmap(file)}catch(e){}
+
+ }
+
+ return loadImage(file);
+
+}
+
+async function compressPhoto(file){
+
+ if(!file||!((file.type||'').startsWith('image/')||/\.(jpe?g|png|webp|heic|heif)$/i.test(file.name||'')))throw new Error('o arquivo não é uma imagem');
+
+ const img=await decodeImage(file);
+
+ const ow=img.width||img.naturalWidth,oh=img.height||img.naturalHeight;
+
+ if(!ow||!oh)throw new Error('imagem inválida');
+
+ const scale=Math.min(1,PHOTO_LONG/Math.max(ow,oh),PHOTO_SHORT/Math.min(ow,oh));
+
+ const w=Math.max(1,Math.round(ow*scale)),h=Math.max(1,Math.round(oh*scale));
+
+ const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+
+ const ctx=canvas.getContext('2d');if(!ctx)throw new Error('canvas indisponível');
+
+ ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+
+ ctx.drawImage(img,0,0,w,h);
+
+ if(img.close)img.close();
+
+ let q=0.72,data=canvas.toDataURL('image/jpeg',q);
+
+ if(!data.startsWith('data:image/jpeg'))throw new Error('o navegador não gerou JPEG');
+
+ while(data.length*0.75>PHOTO_TARGET_KB*1024&&q>0.45){q-=0.08;data=canvas.toDataURL('image/jpeg',q)}
+
+ canvas.width=canvas.height=0;
+
+ return {data,ow,oh,w,h,kb:Math.round(data.length*0.75/1024)};
+
+}
+
+function buildChecklist(){let root=$('#checklist');root.innerHTML='';let idx=0;sections().forEach(([title,qs])=>{let sec=document.createElement('div');sec.className='section';sec.innerHTML=`<div class="sectionhead"><h3>${title}</h3><span class="badge">${qs.length} itens</span></div>`;qs.forEach(q=>{let id='q'+(++idx),a=state.answers[q]||{};let d=document.createElement('div');d.className='item';d.innerHTML=`<div class="itemmain"><div class="q">${esc(q)}</div><div class="choices">${['C','NC','NA','NV'].map(v=>`<button class="choice ${a.status===v?'sel':''}" data-v="${v}">${v}</button>`).join('')}</div></div><div class="detail ${a.status==='NC'?'show':''}"><div class="grid"><label class="field">Constatação / evidência<textarea data-f="note" placeholder="Descreva objetivamente a não conformidade...">${esc(a.note)}</textarea></label><label class="field">Ação recomendada<textarea data-f="action" placeholder="Medida recomendada para regularização...">${esc(a.action)}</textarea></label></div><div class="grid" style="margin-top:10px"><label class="field">Responsável pela regularização<input data-f="owner" value="${esc(a.owner)}"></label><label class="field">Prazo<input type="date" data-f="deadline" value="${esc(a.deadline)}"></label></div><div style="margin-top:10px"><div class="sub" style="margin-bottom:6px">Criticidade</div><div class="crit">${['Moderada','Alta','Crítica'].map(v=>`<button class="${a.criticality===v?'sel':''}" data-crit="${v}">${v}</button>`).join('')}</div></div><div class="toolbar"><label class="btn ghost" style="cursor:pointer">📷 Foto/evidência (480p)<input type="file" accept="image/*" capture="environment" data-photo hidden></label></div><div class="photoPreview">${(a.photos||[]).map(p=>`<img src="${p}">`).join('')}</div></div>`;
+
+sec.appendChild(d);d.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{state.answers[q]=state.answers[q]||{};state.answers[q].status=b.dataset.v;save();buildChecklist()});d.querySelectorAll('[data-f]').forEach(el=>el.oninput=()=>{state.answers[q]=state.answers[q]||{};state.answers[q][el.dataset.f]=el.value;save()});d.querySelectorAll('[data-crit]').forEach(b=>b.onclick=()=>{state.answers[q]=state.answers[q]||{};state.answers[q].criticality=b.dataset.crit;save();buildChecklist()});let ph=d.querySelector('[data-photo]');ph.onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;
+
+ state.answers[q]=state.answers[q]||{};
+
+ if((state.answers[q].photos||[]).length>=PHOTO_MAX){toast('Limite de '+PHOTO_MAX+' fotos por quesito.',3000);ph.value='';return}
+
+ ph.disabled=true;toast('Compactando foto…',10000);
+
+ try{
+
+  const r=await compressPhoto(f);
+
+  (state.answers[q].photos=state.answers[q].photos||[]).push(r.data);
+
+  save();buildChecklist();
+
+  toast('Foto anexada: '+r.ow+'×'+r.oh+' → '+r.w+'×'+r.h+' ('+r.kb+' KB)',3500);
+
+ }catch(err){toast('Não foi possível processar a imagem: '+(err&&err.message||err),4500)}
+
+ finally{ph.disabled=false;ph.value=''}};});root.appendChild(sec)});updateProgress()}
+
+function updateProgress(){let qs=sections().flatMap(x=>x[1]),n=qs.filter(q=>state.answers[q]?.status).length,p=qs.length?Math.round(n/qs.length*100):0;$('#answeredBadge').textContent=`${n}/${qs.length} • ${p}%`;$('#bar').style.width=p+'%'}
+
+function fill(){Object.keys(state.meta).forEach(k=>{let e=$('#'+k);if(e)e.value=state.meta[k]||''});if(!state.meta.data)$('#data').value=new Date().toLocaleDateString('en-CA')}
+
+function review(){save();const qs=sections().flatMap(x=>x[1]),counts=countsOf(qs);
+
+ $('#stats').innerHTML=Object.entries(counts).map(([k,v])=>`<div class="stat" style="border-top:4px solid ${ST[k][1]}"><b>${v}</b><small>${k}</small></div>`).join('');
+
+ $('#chartBox').innerHTML=chartSVG(counts);
+
+ $('#reviewTitle').textContent=(state.meta.lotacao||'Lotação não informada')+' • '+(fmtDate(state.meta.data)||'data não informada');
+
+ let p=$('#pendings');p.innerHTML='';
+
+ qs.filter(q=>state.answers[q]?.status==='NC').forEach(q=>{let a=state.answers[q],cm=critMeta(a.criticality),e=document.createElement('div');e.className='item pending';e.style.borderLeftColor=cm.bg;e.style.borderLeftWidth='6px';
+
+  e.innerHTML=`<div class="itemmain"><div class="q">${badge(a.criticality||'Sem criticidade',cm)} ${esc(q)}</div><div class="sub"><b>Constatação:</b> ${esc(a.note||'Não descrita')}</div><div class="sub" style="margin-top:5px"><b>Ação:</b> ${esc(a.action||'Não informada')}</div>${a.owner?`<div class="sub"><b>Responsável:</b> ${esc(a.owner)} ${a.deadline?'• prazo '+esc(fmtDate(a.deadline)):''}</div>`:''}</div>`;p.appendChild(e)});
+
+ if(!p.children.length)p.innerHTML='<div class="notice">Nenhuma não conformidade registrada.</div>';
+
+ $('#screenForm').classList.add('hidden');$('#screenReview').classList.remove('hidden');$('#reviewBtn').classList.add('hidden');$('#backBtn').classList.remove('hidden');scrollTo(0,0)}
+
+function ensureInspectionId(){
+
+ if(!state.inspectionId){let d=(state.meta?.data||new Date().toISOString().slice(0,10)).replaceAll('-','');let rnd=String(Date.now()).slice(-6);state.inspectionId=`BRI-${d}-${rnd}`;save()}
+
+ return state.inspectionId;
+
+}
+
+function buildPrintReport(){
+
+ save();
+
+ const docId=ensureInspectionId(),secs=sections(),qs=secs.flatMap(x=>x[1]),counts=countsOf(qs);
+
+ const ncs=qs.filter(q=>state.answers[q]?.status==='NC'),ncRef={};ncs.forEach((q,i)=>ncRef[q]='NC-'+String(i+1).padStart(2,'0'));
+
+ const m=state.meta||{},modules=MODULES.filter(([k])=>state.modules[k]).map(([,n])=>n).join(', ')||'Nenhum módulo específico selecionado';
+
+ const box=(t,v,cls='')=>`<div class="printBox ${cls}"><b>${t}</b>${esc(v)}</div>`;
+
+ const ncHtml=ncs.length?ncs.map(q=>{const a=state.answers[q]||{},ref=ncRef[q],cm=critMeta(a.criticality),ph=a.photos||[];
+
+  const ev=ph.length?ph.map((_,i)=>`EV-${ref.slice(3)}.${i+1}`).join(', '):'sem fotografia';
+
+  return `<div class="printNC" style="border-left-color:${cm.bg}"><h3><span class="photoRef">${ref}</span>${badge(a.criticality||'Sem criticidade',cm)}${esc(q)}</h3><div class="ncGrid"><p><b>Constatação:</b> ${esc(a.note||'Não descrita')}</p><p><b>Ação recomendada:</b> ${esc(a.action||'Não informada')}</p></div><p class="ncMeta"><b>Responsável:</b> ${esc(a.owner||'Não informado')} • <b>Prazo:</b> ${esc(a.deadline?fmtDate(a.deadline):'Não definido')} • <b>Evidências:</b> ${ev}</p></div>`}).join(''):'<p>Nenhuma não conformidade registrada.</p>';
+
+ let n=0;
+
+ const chk=secs.map(([title,list])=>`<h3 class="secTitle">${esc(title)}</h3><table class="chk"><thead><tr><th class="n">Nº</th><th>Quesito</th><th class="s">Situação</th><th class="r">Ref. / criticidade</th></tr></thead><tbody>${list.map(q=>{n++;
+
+  const a=state.answers[q]||{},st=a.status||'Pendente',sm=ST[st];
+
+  const ref=st==='NC'?`<span class="photoRef">${ncRef[q]}</span>${badge(a.criticality||'Sem criticidade',critMeta(a.criticality))}`:'';
+
+  return `<tr class="${st==='NC'?'nc':st==='Pendente'?'pend':''}"><td class="n">${n}</td><td>${esc(q)}</td><td class="s"><span class="sbadge" style="background:${sm[1]}">${st==='Pendente'?'Sem resposta':st+' — '+sm[0]}</span></td><td class="r">${ref}</td></tr>`}).join('')}</tbody></table>`).join('');
+
+ const photoGroups=ncs.filter(q=>(state.answers[q]?.photos||[]).length);
+
+ const photoHtml=photoGroups.length?`<h2 class="printTitle">Anexo fotográfico — evidências</h2>${photoGroups.map(q=>{const a=state.answers[q]||{},ref=ncRef[q],cm=critMeta(a.criticality);
+
+  return `<div class="photoCard" style="border-left-color:${cm.bg}"><h3><span class="photoRef">${ref}</span>${badge(a.criticality||'Sem criticidade',cm)}${esc(q)}</h3><div class="photoGrid">${(a.photos||[]).map((src,i)=>`<figure><img src="${src}" alt="Evidência ${ref}"><figcaption><b>EV-${ref.slice(3)}.${i+1}</b></figcaption></figure>`).join('')}</div></div>`}).join('')}`:'';
+
+ const sig=state.signature?`<div class="printSignature"><h2 class="printTitle">Responsável pela vistoria</h2><img src="${state.signature}" alt="Assinatura"><div><b>${esc(m.brigadista||'Brigadista não informado')}</b></div></div>`:'';
+
+ const crest=`<img class="printCrest" src="https://www.itatiba.sp.gov.br/Arquitetura/Imagens/brasao_itatiba.png" alt="Brasão oficial da Prefeitura de Itatiba">`;
+
+ $('#printReport').innerHTML=`<div class="printHead">${crest}<div><h1>PREFEITURA DO MUNICÍPIO DE ITATIBA</h1><p><b>SESMT</b> — Checklist de Vistoria Técnica • Brigada de Incêndio</p></div><div class="printDocId"><strong>${esc(docId)}</strong><br>Data: ${esc(fmtDate(m.data)||'Não informada')}<br>Formulário v3.0</div></div>`
+
+ +`<div class="printGrid">${box('Lotação',m.lotacao||'Não informada')}${box('Secretaria',m.secretaria||'Não informada')}${box('Endereço',m.endereco||'Não informado')}${box('Data',fmtDate(m.data)||'Não informada')}${box('Brigadista',m.brigadista||'Não informado')}${box('Responsável pela unidade',m.responsavel||'Não informado')}${box('Setor / pavimento',m.setor||'Toda a unidade')}${box('População aproximada',m.populacao||'Não informada')}${box('Módulos aplicáveis',modules,'wide')}</div>`
+
+ +`<h2 class="printTitle">Resultado da vistoria</h2><div class="chartWrap">${chartSVG(counts)}</div>`
+
+ +`<h2 class="printTitle">Não conformidades e plano de ação</h2>${ncHtml}`
+
+ +`<h2 class="printTitle">Checklist completo</h2>${chk}`
+
+ +(m.obsGeral?`<h2 class="printTitle">Observações gerais</h2><div class="printBox printObs">${esc(m.obsGeral)}</div>`:'')
+
+ +photoHtml+sig
+
+ +`<div class="printFooter"><span>Prefeitura do Município de Itatiba • SESMT</span><span>Documento ${esc(docId)}</span></div>`;
+
+}
+
+function printCssRules(){
+
+ const t=document.querySelector('style').textContent,tag='@media print{',i=t.indexOf(tag);if(i<0)return '';
+
+ let d=0,j=i+tag.length-1;for(;j<t.length;j++){if(t[j]==='{')d++;else if(t[j]==='}'){d--;if(!d)break}}
+
+ return t.slice(i+tag.length,j);
+
+}
+
+function buildReportDoc(){
+
+ buildPrintReport();
+
+ const body=$('#printReport').innerHTML,id=ensureInspectionId(),css=document.querySelector('style').textContent;
+
+ const extra=`#printReport{display:block!important;max-width:820px;margin:0 auto}body{margin:0;padding:0 12px 24px;background:#fff}
+
+.noprint{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #dfe4e8;padding:10px 0;margin:0 -12px 10px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+
+.noprint button{background:#9d1d20;color:#fff;border:0;border-radius:10px;padding:11px 16px;font:700 15px system-ui,Arial;cursor:pointer}.noprint span{color:#65717e;font:13px system-ui,Arial}
+
+@media screen{body{font-size:13px}table.chk{font-size:12px}.printHead{grid-template-columns:56px 1fr}.printDocId{grid-column:1/-1;text-align:left}}
+
+@media screen and (max-width:700px){.printGrid{grid-template-columns:1fr 1fr}.ncGrid{grid-template-columns:1fr}.photoGrid{grid-template-columns:1fr 1fr}table.chk .r{width:84px}}
+
+@media print{.noprint{display:none!important}body{padding:0}}`;
+
+ return `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(id)} — Vistoria Brigada de Incêndio</title><style>${css}\n${printCssRules()}\n${extra}</style></head><body><div class="noprint"><button onclick="window.print()">Imprimir / Salvar como PDF</button><span>No celular, escolha “Salvar como PDF” na tela de impressão.</span></div><section id="printReport">${body}</section><script>window.addEventListener('load',function(){setTimeout(function(){try{window.print()}catch(e){}},500)})<\\/script></body></html>`;
+
+}
+
+async function printReport(){
+  const btn=$('#printBtn');
+  try{
+    btn.disabled=true;btn.textContent='Preparando PDF…';
+    buildPrintReport();
+    const images=Array.from(document.querySelectorAll('#printReport img'));
+    await Promise.all(images.map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});setTimeout(resolve,4000)})));
+    if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+    window.print();
+  }catch(err){console.error('Falha na impressão',err);toast('Erro ao preparar PDF: '+(err.message||err),5000)}
+  finally{btn.disabled=false;btn.textContent='Imprimir / PDF'}
+}
+
+function downloadReport(){
+
+ const html=buildReportDoc(),a=document.createElement('a');
+
+ a.href=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));a.download=ensureInspectionId()+'_relatorio.html';
+
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),10000);
+
+ toast('Relatório baixado. Abra o arquivo e use Imprimir → Salvar como PDF.',4000);
+
+}
+
+function exportJson(){save();let data={schema:'brigada-incendio-v2',id:ensureInspectionId(),createdAt:new Date().toISOString(),...state};let blob=new Blob([JSON.stringify(data)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(data.id+'.json');a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+
+function setupSig(){let c=$('#sig'),ctx=c.getContext('2d'),draw=false;function resize(){let dpr=devicePixelRatio||1,rect=c.getBoundingClientRect(),old=state.signature;c.width=rect.width*dpr;c.height=160*dpr;ctx.scale(dpr,dpr);ctx.lineWidth=2;ctx.lineCap='round';if(old){let im=new Image();im.onload=()=>ctx.drawImage(im,0,0,rect.width,160);im.src=old}}resize();let pos=e=>{let r=c.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return [t.clientX-r.left,t.clientY-r.top]};function start(e){draw=true;let [x,y]=pos(e);ctx.beginPath();ctx.moveTo(x,y);e.preventDefault()}function move(e){if(!draw)return;let [x,y]=pos(e);ctx.lineTo(x,y);ctx.stroke();e.preventDefault()}function end(){if(draw){draw=false;state.signature=c.toDataURL('image/png');save()}}c.addEventListener('pointerdown',start);c.addEventListener('pointermove',move);window.addEventListener('pointerup',end);$('#clearSig').onclick=()=>{ctx.clearRect(0,0,c.width,c.height);state.signature='';save()}}
+
+['lotacao','secretaria','endereco','responsavel','brigadista','data','setor','populacao','obsGeral'].forEach(id=>document.addEventListener('input',e=>{if(e.target.id===id)save()}));$('#reviewBtn').onclick=review;$('#backBtn').onclick=()=>{$('#screenReview').classList.add('hidden');$('#screenForm').classList.remove('hidden');$('#reviewBtn').classList.remove('hidden');$('#backBtn').classList.add('hidden');scrollTo(0,0)};$('#exportBtn').onclick=exportJson;$('#printBtn').onclick=printReport;$('#htmlBtn').onclick=downloadReport;$('#newBtn').onclick=async()=>{if(confirm('Iniciar nova vistoria? O rascunho atual será substituído; salve no histórico antes de continuar.')){await dbDelete('draft');store.del(KEY);location.reload()}};
+
+showStorage();fill();buildModules();buildChecklist();setupSig(); initializeOffline();
+
+window.addEventListener('beforeunload',e=>{if((storageMode==='blocked'||storageMode==='full')&&!state.syncedId){e.preventDefault();e.returnValue=''}});
+
+const sendButton=document.getElementById('sendBtn');
+sendButton.onclick=async()=>{
+ save();ensureInspectionId();
+ if(!state.meta.lotacao||!state.meta.brigadista||!state.meta.data){alert('Preencha lotação, brigadista e data.');return}
+ try {await dbPut({id:state.inspectionId,kind:'inspection',updatedAt:new Date().toISOString(),data:structuredClone(state)});toast('Vistoria salva no histórico deste aparelho!',3500)}
+ catch(e){alert('Não foi possível salvar: '+e.message)}
+};
+
+const DB_NAME='brigada-offline-v3';let dbPromise=null,draftTimer;
+function openDB(){if(!dbPromise)dbPromise=new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('records'))req.result.createObjectStore('records',{keyPath:'id'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});return dbPromise}
+async function dbPut(rec){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction('records','readwrite');tx.objectStore('records').put(rec);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}
+async function dbGet(id){const db=await openDB();return new Promise((resolve,reject)=>{const req=db.transaction('records').objectStore('records').get(id);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function dbDelete(id){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction('records','readwrite');tx.objectStore('records').delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}
+async function dbAll(){const db=await openDB();return new Promise((resolve,reject)=>{const req=db.transaction('records').objectStore('records').getAll();req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function scheduleDraft(){clearTimeout(draftTimer);draftTimer=setTimeout(()=>{dbPut({id:'draft',kind:'draft',updatedAt:new Date().toISOString(),data:structuredClone(state)}).catch(e=>console.warn('Erro ao salvar rascunho',e))},450)}
+function loadState(rec){state=structuredClone(rec.data);state.meta=state.meta||{};state.modules=state.modules||{};state.answers=state.answers||{};store.set(KEY,JSON.stringify(lightState()));location.reload()}
+async function initializeOffline(){
+ try{const draft=await dbGet('draft');if(draft?.data){state=draft.data;state.meta=state.meta||{};state.modules=state.modules||{};state.answers=state.answers||{};fill();buildModules();buildChecklist();setupSignatureRestore()}}catch(e){console.warn('IndexedDB indisponível',e);toast('Armazenamento local indisponível; exporte o JSON.',5000)}
+ try{const response=await fetch('brasao.png');if(response.ok){const blob=await response.blob();const reader=new FileReader();reader.onload=()=>crestData=reader.result;reader.readAsDataURL(blob)}}catch(e){}
+ if('serviceWorker' in navigator && location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(console.warn);
+}
+function setupSignatureRestore(){const canvas=$('#sig');if(state.signature){const im=new Image();im.onload=()=>canvas.getContext('2d').drawImage(im,0,0,canvas.getBoundingClientRect().width,160);im.src=state.signature}}
+function showForm(){['screenHistory','screenReview'].forEach(id=>$('#'+id).classList.add('hidden'));$('#screenForm').classList.remove('hidden');$('#reviewBtn').classList.remove('hidden');$('#backBtn').classList.add('hidden')}
+async function showHistory(){save();$('#screenForm').classList.add('hidden');$('#screenReview').classList.add('hidden');$('#screenHistory').classList.remove('hidden');$('#reviewBtn').classList.add('hidden');$('#backBtn').classList.add('hidden');const list=$('#historyList');list.textContent='Carregando...';try{const recs=(await dbAll()).filter(x=>x.kind==='inspection').sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));list.innerHTML=recs.length?'':'<p class="sub">Nenhuma vistoria arquivada ainda.</p>';for(const rec of recs){const div=document.createElement('div');div.className='item';const m=rec.data.meta||{};div.innerHTML=`<div class="itemmain"><b>${esc(m.lotacao||'Unidade não informada')}</b><div class="sub">${esc(fmtDate(m.data))} • ${esc(rec.id)} • ${esc(m.brigadista||'')}</div><div class="toolbar"><button class="btn ghost" data-open>Reabrir</button><button class="btn danger" data-delete>Excluir</button></div></div>`;div.querySelector('[data-open]').onclick=()=>{if(confirm('Reabrir esta vistoria? O rascunho atual será substituído.')){dbPut({id:'draft',kind:'draft',updatedAt:new Date().toISOString(),data:rec.data}).then(()=>loadState(rec))}};div.querySelector('[data-delete]').onclick=async()=>{if(confirm('Excluir permanentemente esta vistoria?')){await dbDelete(rec.id);showHistory()}};list.appendChild(div)}}catch(e){list.textContent='Falha ao abrir histórico: '+e.message}scrollTo(0,0)}
+$('#historyBtn').onclick=showHistory;$('#historyBack').onclick=showForm;
+function downloadJsonFile(obj,name){const url=URL.createObjectURL(new Blob([JSON.stringify(obj)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000)}
+$('#backupAll').onclick=async()=>{try{const records=await dbAll();downloadJsonFile({schema:'brigada-offline-v3-backup',exportedAt:new Date().toISOString(),records},'brigada_backup_completo.json')}catch(e){alert(e.message)}};
+$('#restoreAll').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text());if(data.schema!=='brigada-offline-v3-backup'||!Array.isArray(data.records))throw Error('Formato de backup incompatível');if(!confirm('Importar '+data.records.length+' registros? IDs iguais serão substituídos.'))return;for(const r of data.records){if(!r.id||!r.data||!['draft','inspection'].includes(r.kind))throw Error('Registro inválido');await dbPut(r)}await showHistory();toast('Backup restaurado',3500)}catch(err){alert('Falha na restauração: '+err.message)}finally{e.target.value=''}};
+</script></body></html>

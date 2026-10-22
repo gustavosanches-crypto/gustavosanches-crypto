@@ -1,0 +1,11 @@
+BRIGADA DE INCÊNDIO — V3.0 OFFLINE (PROTÓTIPO)
+
+1. Publique TODOS os arquivos desta pasta juntos em uma hospedagem HTTPS gratuita de arquivos estáticos (por exemplo, Cloudflare Pages ou GitHub Pages).
+2. Abra a URL publicada com internet uma vez e instale o aplicativo pelo navegador, quando disponível.
+3. A partir daí, o formulário e o relatório podem ser utilizados sem conexão. O brasão oficial ainda depende da imagem externa e pode não aparecer offline; para uso integralmente offline, salve o PNG oficial como brasao.png e substitua as referências externas no index.html, adicionando brasao.png ao cache do sw.js.
+4. O botão Salvar no histórico arquiva a vistoria no IndexedDB do dispositivo. O botão Histórico permite reabertura, exclusão e backup completo.
+5. Imprimir/PDF usa a impressão do navegador e requer suporte do sistema para Salvar como PDF.
+6. NÃO use navegação anônima. Faça backup completo JSON periodicamente: os dados são locais e podem ser perdidos se limpar o navegador ou desinstalar o app.
+7. A migração automática de fotos antigas do localStorage não é garantida. Faça um backup JSON da versão anterior antes de trocar de versão.
+
+OBSERVAÇÃO: protótipo de desenvolvimento, ainda não validado em celulares reais. O acesso por arquivo file:// não ativa o Service Worker; para testar o offline, publique em HTTPS.
